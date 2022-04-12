@@ -5,14 +5,14 @@
     "anonymousAuthentication": true,
     "iisExpress": {
       "applicationUrl": "http://localhost:44081",
-      "sslPort": 0
+      "sslPort": 44395
     }
   },
   "profiles": {
     "BASE.MICRONET.History": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
-      "launchBrowser": true,
+      "launchBrowser": false,
       "launchUrl": "",
       "applicationUrl": "http://localhost:5004",
       "environmentVariables": {
