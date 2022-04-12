@@ -1,14 +1,10 @@
+using BASE.MICRONET.History.Repositories;
+using BASE.MICRONET.History.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BASE.MICRONET.History
 {
@@ -24,8 +20,15 @@ namespace BASE.MICRONET.History
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
+            services.Configure<Mongosettings>(opt =>
+            {
+                opt.Connection = Configuration.GetSection("mongo:cn").Value;
+                opt.DatabaseName = Configuration.GetSection("mongo:database").Value;
+            });
+            services.AddScoped<IHistoryService, HistoryService>();
+            services.AddScoped<IMongoBookDBContext, MongoBookDBContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

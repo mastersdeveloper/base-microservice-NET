@@ -1,14 +1,11 @@
+using BASE.MICRONET.Deposit.Repositories;
+using BASE.MICRONET.Deposit.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace BASE.MICRONET.Deposit
 {
@@ -24,8 +21,14 @@ namespace BASE.MICRONET.Deposit
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
+
+            services.AddDbContext<ContextDatabase>(
+             options =>
+             {
+                 options.UseNpgsql(Configuration["postgres:cn"]);
+             });
+            services.AddScoped<ITransactionService, TransactionService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
