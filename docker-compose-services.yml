@@ -1,0 +1,19 @@
+﻿version: "3.5"
+
+services:
+  my-rabbit:
+    image: rabbitmq:3.8.13-management
+    container_name: service-event
+    restart: always
+    environment:
+    - RABBITMQ_DEFAULT_USER=aforo255
+    - RABBITMQ_DEFAULT_PASS=aforo255
+    ports:
+    - 15672:15672
+    - 5672:5672
+    networks:
+    - aforo255
+
+networks:
+  aforo255:
+    name: micro

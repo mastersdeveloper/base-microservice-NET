@@ -2,6 +2,8 @@
 using BASE.MICRONET.Deposit.DTOs;
 using BASE.MICRONET.Deposit.Services;
 using System;
+using BASE.MICRONET.Cross.Event.Dir.Bus;
+using BASE.MICRONET.Deposit.Messages.Commands;
 
 namespace BASE.MICRONET.Deposit.Controllers
 {
@@ -10,9 +12,11 @@ namespace BASE.MICRONET.Deposit.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
-        public TransactionController( ITransactionService transactionService)
+        private readonly IEventBus _bus;
+        public TransactionController(ITransactionService transactionService, IEventBus bus)
         {
             _transactionService = transactionService;
+            _bus = bus;
         }
 
         [HttpPost("Deposit")]
@@ -26,6 +30,16 @@ namespace BASE.MICRONET.Deposit.Controllers
                 Type = "Deposit"
             };
             transaction = _transactionService.Deposit(transaction);
+
+            var transactionCreateCommand = new TransactionCreateCommand(
+                   idTransaction: transaction.Id,
+                   amount: transaction.Amount,
+                   type: transaction.Type,
+                   creationDate: transaction.CreationDate,
+                   accountId: transaction.AccountId
+                );
+
+            _bus.SendCommand(transactionCreateCommand);
 
             return Ok(transaction);
         }

@@ -1,11 +1,17 @@
+using BASE.MICRONET.Cross.Http.Dir;
+using BASE.MICRONET.Deposit.Messages.CommandHandlers;
+using BASE.MICRONET.Deposit.Messages.Commands;
 using BASE.MICRONET.Deposit.Repositories;
 using BASE.MICRONET.Deposit.Services;
+using BASE.MICRONETBASE.MICRONET.Cross.Event.Dir;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System.Reflection;
 
 namespace BASE.MICRONET.Deposit
 {
@@ -29,6 +35,15 @@ namespace BASE.MICRONET.Deposit
                  options.UseNpgsql(Configuration["postgres:cn"]);
              });
             services.AddScoped<ITransactionService, TransactionService>();
+
+            /*Start RabbitMQ*/
+            services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
+            services.AddRabbitMQ();
+            services.AddTransient<IRequestHandler<TransactionCreateCommand, bool>, TransactionCommandHandler>();
+            services.AddTransient<IRequestHandler<NotificationCreateCommand, bool>, NotificationCommandHandler>();
+            /*End RabbitMQ*/
+
+            services.AddProxyHttp();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
