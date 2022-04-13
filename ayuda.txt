@@ -18,6 +18,8 @@ docker run -p 9090:9090 --name service-metrics --network micro -v D:/GitDach092/
 
 docker run -p 3000:3000 --name service-analytics --network micro -d grafana/grafana:8.2.3
 
+docker run -e ACCEPT_EULA=Y --name service-log -p 5341:80 -d datalust/seq:2021.3
+
 OpenTracing.Contrib.NetCore => permite recolectar toda la informacion de diagnostico desde de la aplicacion .NET
 
 

@@ -1,5 +1,6 @@
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Mvc;
+using BASE.MICRONET.Cross.Log.Dir;
 using BASE.MICRONET.Cross.Token.Dir;
 using BASE.MICRONET.Cross.Tracing.Dir;
 using BASE.MICRONET.Security.Repositories;
@@ -77,6 +78,9 @@ namespace BASE.MICRONET.Security
             {
                 consulClient.Agent.ServiceDeregister(serviceId);
             });
+
+            //Log Seq
+            app.UseLogSeq();
         }
     }
 }
