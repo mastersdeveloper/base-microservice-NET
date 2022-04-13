@@ -6,7 +6,9 @@
 
   <ItemGroup>
     <PackageReference Include="Ocelot" Version="17.0.1" />
+    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.8.0" />
     <ProjectReference Include="..\BASE.MICRONET.Cross.Token\BASE.MICRONET.Cross.Token.csproj" />
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Tracing\BASE.MICRONET.Cross.Tracing.csproj" />
   </ItemGroup>
 
 </Project>

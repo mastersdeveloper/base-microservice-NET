@@ -3,6 +3,7 @@ using BASE.MICRONET.Account.Service;
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Fabio;
 using BASE.MICRONET.Cross.Discovery.Mvc;
+using BASE.MICRONET.Cross.Tracing.Dir;
 using Consul;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -47,6 +48,11 @@ namespace BASE.MICRONET.Account
             /*End - Consul*/
 
             services.AddFabio();
+
+            /*Start - Tracer distributed*/
+            services.AddJaeger();
+            services.AddOpenTracing();
+            /*End - Tracer distributed*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

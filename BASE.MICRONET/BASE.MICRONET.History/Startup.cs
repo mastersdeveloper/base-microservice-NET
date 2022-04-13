@@ -2,6 +2,7 @@ using BASE.MICRONET.Cross.Cache.Dir;
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Mvc;
 using BASE.MICRONET.Cross.Event.Dir.Bus;
+using BASE.MICRONET.Cross.Tracing.Dir;
 using BASE.MICRONET.History.Messages.EventHandlers;
 using BASE.MICRONET.History.Messages.Events;
 using BASE.MICRONET.History.Repositories;
@@ -56,6 +57,11 @@ namespace BASE.MICRONET.History
 
             services.AddRedis();
             services.AddSingleton<IExtensionCache, ExtensionCache>();
+
+            /*Start - Tracer distributed*/
+            services.AddJaeger();
+            services.AddOpenTracing();
+            /*End - Tracer distributed*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

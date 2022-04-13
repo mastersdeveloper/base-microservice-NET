@@ -1,6 +1,7 @@
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Mvc;
 using BASE.MICRONET.Cross.Http.Dir;
+using BASE.MICRONET.Cross.Tracing.Dir;
 using BASE.MICRONET.Deposit.Messages.CommandHandlers;
 using BASE.MICRONET.Deposit.Messages.Commands;
 using BASE.MICRONET.Deposit.Repositories;
@@ -57,6 +58,11 @@ namespace BASE.MICRONET.Deposit
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Comunicacion Http
             services.AddConsul();//permite implementar toda la funcionalidad, se registra en Consul 
             /*End - Consul*/
+
+            /*Start - Tracer distributed*/
+            services.AddJaeger();
+            services.AddOpenTracing();
+            /*End - Tracer distributed*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

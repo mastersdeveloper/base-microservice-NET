@@ -6,9 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
+    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.8.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BASE.MICRONET.Cross.Discovery\BASE.MICRONET.Cross.Discovery.csproj" />
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Tracing\BASE.MICRONET.Cross.Tracing.csproj" />
   </ItemGroup>
 </Project>

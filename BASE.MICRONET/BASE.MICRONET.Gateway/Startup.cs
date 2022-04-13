@@ -1,4 +1,5 @@
 using BASE.MICRONET.Cross.Token.Dir;
+using BASE.MICRONET.Cross.Tracing.Dir;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -22,6 +23,11 @@ namespace BASE.MICRONET.Gateway
         {
             services.AddJwtCustomized("MY-KEY-JWT");
             services.AddOcelot();
+
+            /*Start - Tracer distributed*/
+            services.AddJaeger();
+            services.AddOpenTracing();
+            /*End - Tracer distributed*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,6 +1,7 @@
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Mvc;
 using BASE.MICRONET.Cross.Token.Dir;
+using BASE.MICRONET.Cross.Tracing.Dir;
 using BASE.MICRONET.Security.Repositories;
 using BASE.MICRONET.Security.Services;
 using Consul;
@@ -43,6 +44,11 @@ namespace BASE.MICRONET.Security
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Comunicacion Http
             services.AddConsul();//permite implementar toda la funcionalidad, se registra en Consul 
             /*End - Consul*/
+
+            /*Start - Tracer distributed*/
+            services.AddJaeger();
+            services.AddOpenTracing();
+            /*End - Tracer distributed*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

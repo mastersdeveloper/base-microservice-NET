@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+    <PackageReference Include="OpenTracing.Contrib.NetCore" Version="0.8.0" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
     <PackageReference Include="Polly" Version="7.2.3" />
   </ItemGroup>
@@ -14,5 +15,6 @@
     <ProjectReference Include="..\BASE.MICRONET.Cross.Discovery\BASE.MICRONET.Cross.Discovery.csproj" />
     <ProjectReference Include="..\BASE.MICRONET.Cross.Event\BASE.MICRONET.Cross.Event.csproj" />
     <ProjectReference Include="..\BASE.MICRONET.Cross.Http\BASE.MICRONET.Cross.Http.csproj" />
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Tracing\BASE.MICRONET.Cross.Tracing.csproj" />
   </ItemGroup>
 </Project>
