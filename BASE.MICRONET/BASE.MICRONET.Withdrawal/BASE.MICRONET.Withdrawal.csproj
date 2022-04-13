@@ -6,5 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="5.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Event\BASE.MICRONET.Cross.Event.csproj" />
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Http\BASE.MICRONET.Cross.Http.csproj" />
   </ItemGroup>
 </Project>

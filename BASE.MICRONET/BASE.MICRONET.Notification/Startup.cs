@@ -1,4 +1,10 @@
+using BASE.MICRONET.Cross.Event.Dir.Bus;
+using BASE.MICRONET.Notification.Messages.EventHandlers;
+using BASE.MICRONET.Notification.Messages.Events;
 using BASE.MICRONET.Notification.Repositories;
+using BASE.MICRONET.Notification.Services;
+using BASE.MICRONETBASE.MICRONET.Cross.Event.Dir;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -27,6 +33,16 @@ namespace BASE.MICRONET.Notification
              {
                  opt.UseMySQL(Configuration["mariadb:cn"]);
              });
+
+            services.AddScoped<INotificationService, NotificationService>();
+
+            /*Start - RabbitMQ*/
+            services.AddMediatR(typeof(Startup));
+            services.AddRabbitMQ();
+
+            services.AddTransient<NotificationEventHandler>();
+            services.AddTransient<IEventHandler<NotificationCreatedEvent>, NotificationEventHandler>();
+            /*End - RabbitMQ*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,6 +61,14 @@ namespace BASE.MICRONET.Notification
             {
                 endpoints.MapControllers();
             });
+
+            ConfigureEventBus(app);
+        }
+
+        private void ConfigureEventBus(IApplicationBuilder app)
+        {
+            var eventBus = app.ApplicationServices.GetRequiredService<IEventBus>();
+            eventBus.Subscribe<NotificationCreatedEvent, NotificationEventHandler>();
         }
     }
 }

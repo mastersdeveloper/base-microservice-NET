@@ -2,6 +2,8 @@
 using BASE.MICRONET.Withdrawal.DTOs;
 using BASE.MICRONET.Withdrawal.Services;
 using System;
+using BASE.MICRONET.Cross.Event.Dir.Bus;
+using BASE.MICRONET.Withdrawal.Messages.Commands;
 
 namespace BASE.MICRONET.Withdrawal.Controllers
 {
@@ -10,9 +12,12 @@ namespace BASE.MICRONET.Withdrawal.Controllers
     public class TransactionController : ControllerBase
     {
         private readonly ITransactionService _transactionService;
-        public TransactionController( ITransactionService transactionService)
+        private readonly IEventBus _bus;
+
+        public TransactionController(ITransactionService transactionService, IEventBus bus)
         {
             _transactionService = transactionService;
+            _bus = bus;
         }
 
         [HttpPost("Withdrawal")]
@@ -26,6 +31,16 @@ namespace BASE.MICRONET.Withdrawal.Controllers
                 Type = "Withdrawal"
             };
             transaction = _transactionService.Withdrawal(transaction);
+
+            var notificationCreateCommand = new NotificationCreateCommand(
+                  idTransaction: transaction.Id,
+                  amount: transaction.Amount,
+                  type: transaction.Type,
+                  creationDate: transaction.CreationDate,
+                  accountId: transaction.AccountId
+               );
+
+            _bus.SendCommand(notificationCreateCommand);
 
             return Ok(transaction);
         }

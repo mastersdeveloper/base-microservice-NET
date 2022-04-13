@@ -6,6 +6,11 @@
 
   <ItemGroup>
     <PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />    
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Event\BASE.MICRONET.Cross.Event.csproj" />
   </ItemGroup>
   
 </Project>
