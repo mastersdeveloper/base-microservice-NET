@@ -7,4 +7,8 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.1" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Discovery\BASE.MICRONET.Cross.Discovery.csproj" />
+  </ItemGroup>
 </Project>

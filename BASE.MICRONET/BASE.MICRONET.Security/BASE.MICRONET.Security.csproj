@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Discovery\BASE.MICRONET.Cross.Discovery.csproj" />
     <ProjectReference Include="..\BASE.MICRONET.Cross.Token\BASE.MICRONET.Cross.Token.csproj" />
   </ItemGroup>
 

@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Discovery\BASE.MICRONET.Cross.Discovery.csproj" />
     <ProjectReference Include="..\BASE.MICRONET.Cross.Event\BASE.MICRONET.Cross.Event.csproj" />
   </ItemGroup>
   

@@ -1,12 +1,16 @@
+using BASE.MICRONET.Cross.Discovery.Consul;
+using BASE.MICRONET.Cross.Discovery.Mvc;
 using BASE.MICRONET.Cross.Http.Dir;
 using BASE.MICRONET.Withdrawal.Messages.CommandHandlers;
 using BASE.MICRONET.Withdrawal.Messages.Commands;
 using BASE.MICRONET.Withdrawal.Repositories;
 using BASE.MICRONET.Withdrawal.Services;
 using BASE.MICRONETBASE.MICRONET.Cross.Event.Dir;
+using Consul;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,10 +48,17 @@ namespace BASE.MICRONET.Withdrawal
             /*End RabbitMQ*/
 
             services.AddProxyHttp();
+
+            /*Start - Consul*/
+            services.AddSingleton<IServiceId, ServiceId>();//Genera un Guid, para identificar al registro
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Comunicacion Http
+            services.AddConsul();//permite implementar toda la funcionalidad, se registra en Consul 
+            /*End - Consul*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IHostApplicationLifetime applicationLifetime, IConsulClient consulClient)
         {
             if (env.IsDevelopment())
             {
@@ -61,6 +72,13 @@ namespace BASE.MICRONET.Withdrawal
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+            });
+
+            //Cuando la aplicacion se apaga se retira el registro de su base de datos de Consul             
+            var serviceId = app.UseConsul();
+            applicationLifetime.ApplicationStopped.Register(() =>
+            {
+                consulClient.Agent.ServiceDeregister(serviceId);
             });
         }
     }

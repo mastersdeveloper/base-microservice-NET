@@ -1,6 +1,7 @@
 //Ocelot: me permite poder trabar gateway en NET 
 // En Routes vamos a configurar las rutas 
-
+// UpstreamPathTemplate: especifica el nombre de la ruta configurada en el gateway al cual vamos a acceder 
+// DownstreamPathTemplate: especifica el nombre base del api a llamar el cual se relaciona con la ruta gateway especificada
 
 {
   "Routes": [
@@ -17,12 +18,12 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/app-account/api/account",
+      "DownstreamPathTemplate": "/api/account",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 9999
+          "Port": 5002
         }
       ],
       "UpstreamPathTemplate": "/api/account",
@@ -54,7 +55,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5004
+          "Port": 5006
         }
       ],
       "UpstreamPathTemplate": "/api/transaction/withdrawal",
@@ -70,7 +71,7 @@
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5005
+          "Port": 5004
         }
       ],
       "UpstreamPathTemplate": "/api/history/{accountId}",

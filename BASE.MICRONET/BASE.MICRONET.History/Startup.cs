@@ -1,12 +1,16 @@
+using BASE.MICRONET.Cross.Discovery.Consul;
+using BASE.MICRONET.Cross.Discovery.Mvc;
 using BASE.MICRONET.Cross.Event.Dir.Bus;
 using BASE.MICRONET.History.Messages.EventHandlers;
 using BASE.MICRONET.History.Messages.Events;
 using BASE.MICRONET.History.Repositories;
 using BASE.MICRONET.History.Services;
 using BASE.MICRONETBASE.MICRONET.Cross.Event.Dir;
+using Consul;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -42,10 +46,17 @@ namespace BASE.MICRONET.History
             services.AddTransient<TransactionEventHandler>();
             services.AddTransient<IEventHandler<TransactionCreatedEvent>, TransactionEventHandler>();
             /*End - RabbitMQ*/
+
+            /*Start - Consul*/
+            services.AddSingleton<IServiceId, ServiceId>();//Genera un Guid, para identificar al registro
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Comunicacion Http
+            services.AddConsul();//permite implementar toda la funcionalidad, se registra en Consul 
+            /*End - Consul*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env,
+            IHostApplicationLifetime applicationLifetime, IConsulClient consulClient)
         {
             if (env.IsDevelopment())
             {
@@ -62,6 +73,13 @@ namespace BASE.MICRONET.History
             });
 
             ConfigureEventBus(app);
+
+            //Cuando la aplicacion se apaga se retira el registro de su base de datos de Consul             
+            var serviceId = app.UseConsul();
+            applicationLifetime.ApplicationStopped.Register(() =>
+            {
+                consulClient.Agent.ServiceDeregister(serviceId);
+            });
         }
 
         private void ConfigureEventBus(IApplicationBuilder app)
