@@ -1,6 +1,7 @@
 using BASE.MICRONET.Security.Data;
 using BASE.MICRONET.Security.Repositories;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -39,6 +40,13 @@ namespace BASE.MICRONET.Security
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //Al agregar aqui estamos indicando que existe otro proveedor de configuracion 
+                    webBuilder.ConfigureAppConfiguration((context, builder) =>
+                    {
+                        var c = builder.Build();
+                        builder.AddNacosConfiguration(c.GetSection("nacosConfig"));
+                    });
+
                     webBuilder.UseStartup<Startup>();
                 });
     }

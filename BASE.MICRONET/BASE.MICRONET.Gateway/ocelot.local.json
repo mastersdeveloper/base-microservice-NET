@@ -18,12 +18,12 @@
       "UpstreamHttpMethod": [ "Post" ]
     },
     {
-      "DownstreamPathTemplate": "/api/account",
+      "DownstreamPathTemplate": "/app-account/api/account", //Aca se cambio apuntando a la ruta del balanceador de carga de Fabio
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
           "Host": "localhost",
-          "Port": 5002
+          "Port": 9999
         }
       ],
       "UpstreamPathTemplate": "/api/account",

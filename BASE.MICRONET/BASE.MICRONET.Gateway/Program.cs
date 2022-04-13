@@ -15,6 +15,7 @@ namespace BASE.MICRONET.Gateway
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
+                    //Al agregar aqui estamos indicando que existe otro proveedor de configuracion 
                     webBuilder.ConfigureAppConfiguration((host, config) =>
                     {
                         config

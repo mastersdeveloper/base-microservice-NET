@@ -1,6 +1,7 @@
 using BASE.MICRONET.Account.Repositories;
 using BASE.MICRONET.Account.Service;
 using BASE.MICRONET.Cross.Discovery.Consul;
+using BASE.MICRONET.Cross.Discovery.Fabio;
 using BASE.MICRONET.Cross.Discovery.Mvc;
 using Consul;
 using Microsoft.AspNetCore.Builder;
@@ -44,6 +45,8 @@ namespace BASE.MICRONET.Account
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Comunicacion Http
             services.AddConsul();//permite implementar toda la funcionalidad, se registra en Consul 
             /*End - Consul*/
+
+            services.AddFabio();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

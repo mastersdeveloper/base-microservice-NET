@@ -31,7 +31,7 @@ namespace BASE.MICRONET.Security
             services.AddDbContext<ContextDatabase>(
                 opt =>
                 {
-                    opt.UseMySQL(Configuration["mysql:cn"]);
+                    opt.UseMySQL(Configuration["cn:mysql"]);//aca se revirtio el orden que se establecio en Nacos, en Nacos se establecio la cadena de conexion
                 });
 
             services.AddScoped<IAccessService, AccessService>();
