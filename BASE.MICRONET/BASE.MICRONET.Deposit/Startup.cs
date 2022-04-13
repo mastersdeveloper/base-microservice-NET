@@ -15,6 +15,7 @@ using System.Reflection;
 
 namespace BASE.MICRONET.Deposit
 {
+    //Polly: tu puedes manejar politicas de reintentos 
     public class Startup
     {
         public Startup(IConfiguration configuration)
@@ -34,7 +35,9 @@ namespace BASE.MICRONET.Deposit
              {
                  options.UseNpgsql(Configuration["postgres:cn"]);
              });
+
             services.AddScoped<ITransactionService, TransactionService>();
+            services.AddScoped<IAccountService, AccountService>();
 
             /*Start RabbitMQ*/
             services.AddMediatR(typeof(Startup).GetTypeInfo().Assembly);
