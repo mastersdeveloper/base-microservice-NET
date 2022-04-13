@@ -1,0 +1,10 @@
+docker run -d -p 6379:6379 -e REDIS_PASSWORD=Aforo255#2019 --name database-redis redis --requirepass Aforo255#2019
+
+docker pull jaegertracing/all-in-one:latest
+
+docker pull prom/prometheus:v2.31.1
+
+docker pull grafana/grafana:8.2.3
+
+docker pull datalust/seq:2021.3
+

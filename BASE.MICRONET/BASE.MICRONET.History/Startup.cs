@@ -1,3 +1,4 @@
+using BASE.MICRONET.Cross.Cache.Dir;
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Mvc;
 using BASE.MICRONET.Cross.Event.Dir.Bus;
@@ -52,6 +53,9 @@ namespace BASE.MICRONET.History
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); //Comunicacion Http
             services.AddConsul();//permite implementar toda la funcionalidad, se registra en Consul 
             /*End - Consul*/
+
+            services.AddRedis();
+            services.AddSingleton<IExtensionCache, ExtensionCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
