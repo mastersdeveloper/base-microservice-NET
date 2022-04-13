@@ -1,5 +1,6 @@
 using BASE.MICRONET.Account.Data;
 using BASE.MICRONET.Account.Repositories;
+using BASE.MICRONET.Cross.Metric.Metrics;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -40,6 +41,7 @@ namespace BASE.MICRONET.Account
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseAppMetrics();
                 });
     }
 }

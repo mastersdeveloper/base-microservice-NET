@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BASE.MICRONET.Cross.Discovery\BASE.MICRONET.Cross.Discovery.csproj" />
+    <ProjectReference Include="..\BASE.MICRONET.Cross.Metric\BASE.MICRONET.Cross.Metric.csproj" />
     <ProjectReference Include="..\BASE.MICRONET.Cross.Tracing\BASE.MICRONET.Cross.Tracing.csproj" />
   </ItemGroup>
 </Project>

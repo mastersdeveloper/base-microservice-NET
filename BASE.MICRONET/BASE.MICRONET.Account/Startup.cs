@@ -3,6 +3,7 @@ using BASE.MICRONET.Account.Service;
 using BASE.MICRONET.Cross.Discovery.Consul;
 using BASE.MICRONET.Cross.Discovery.Fabio;
 using BASE.MICRONET.Cross.Discovery.Mvc;
+using BASE.MICRONET.Cross.Metric.Registry;
 using BASE.MICRONET.Cross.Tracing.Dir;
 using Consul;
 using Microsoft.AspNetCore.Builder;
@@ -53,6 +54,8 @@ namespace BASE.MICRONET.Account
             services.AddJaeger();
             services.AddOpenTracing();
             /*End - Tracer distributed*/
+
+            services.AddTransient<IMetricsRegistry, MetricsRegistry>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
