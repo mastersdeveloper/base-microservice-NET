@@ -1,0 +1,15 @@
+﻿version: "3.5"
+
+services:
+  security:
+    image: dach092/img-security
+    container_name: app-security
+    restart: always
+    ports:
+    - 9001:8080
+    networks:
+    - aforo255  
+
+networks:
+  aforo255:
+    name: micro
