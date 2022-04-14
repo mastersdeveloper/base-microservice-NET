@@ -1,0 +1,32 @@
+stages:
+  - build
+  - deploy
+
+variables:
+  imageDocker: "icuadrosaforo255/img-security"
+  nameContainer: "app-security"
+  portContainer: "9001"
+  machineIp: "104.211.49.67"
+
+build-job:       
+  stage: build
+  image: docker:20.10.2
+  services:
+    - docker:20.10.2-dind
+  script:
+    - "cd ./MS.AFORO255.Security/"
+    - "docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD"
+    - "docker build -t $imageDocker:v$CI_PIPELINE_IID -t $imageDocker:latest ."
+    - "docker push $imageDocker:v$CI_PIPELINE_IID"
+    - "docker push $imageDocker:latest"
+
+deploy-job:
+  stage: deploy
+  image: ubuntu:18.04
+  before_script:
+    - "apt-get update -y"
+    - "apt-get install -y sshpass"
+  script:
+    - "sshpass -p $CD_MACHINE_PASSWORD ssh -o StrictHostKeyChecking=no $CD_MACHINE_USER@$machineIp sudo docker rm -f $nameContainer"
+    - "sshpass -p $CD_MACHINE_PASSWORD ssh -o StrictHostKeyChecking=no $CD_MACHINE_USER@$machineIp sudo docker run -d  --network micro --name $nameContainer  -p $portContainer:80 $imageDocker:v$CI_PIPELINE_IID"
+

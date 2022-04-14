@@ -1,0 +1,63 @@
+version: "3.5"
+
+services:
+  gateway:
+    image: icuadrosaforo255/img-gateway
+    container_name: app-gateway
+    restart: always
+    ports:
+    - 9000:80
+    networks:
+    - aforo255
+  security:
+    image: icuadrosaforo255/img-security
+    container_name: app-security
+    restart: always
+    ports:
+    - 9001:80
+    networks:
+    - aforo255
+  account:
+    image: icuadrosaforo255/img-account
+    container_name: app-account
+    restart: always
+    ports:
+    - 9002:80
+    networks:
+    - aforo255
+  deposit:
+    image: icuadrosaforo255/img-deposit
+    container_name: app-deposit
+    restart: always
+    ports:
+    - 9003:80
+    networks:
+    - aforo255
+  withdrawal:
+    image: icuadrosaforo255/img-withdrawal
+    container_name: app-withdrawal
+    restart: always
+    ports:
+    - 9004:80
+    networks:
+    - aforo255
+  history:
+    image: icuadrosaforo255/img-history
+    container_name: app-history
+    restart: always
+    ports:
+    - 9005:80
+    networks:
+    - aforo255
+  notification:
+    image: icuadrosaforo255/img-notification
+    container_name: app-notification
+    restart: always
+    ports:
+    - 9006:80
+    networks:
+    - aforo255
+
+networks:
+  aforo255:
+    name: micro

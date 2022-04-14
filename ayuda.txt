@@ -45,6 +45,12 @@ Corriendo un contenedor: docker-compose -f .\docker-compose-app.yml up -d
 
 Notas: los cambios en el appsetting donde hay localhost reemplazar por los nombres del contenedor cuando el appsetting es docker 
 
+--------------------------------------------------------------------------------------------------------------------
+
+Ejecutando Docker en Ubuntu
+
+
+
 
 --------------------------------------------------------------------------------------------------------------------
 
