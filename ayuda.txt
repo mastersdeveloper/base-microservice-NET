@@ -26,3 +26,19 @@ OpenTracing.Contrib.NetCore => permite recolectar toda la informacion de diagnos
 Grafana:
 
 	- Contraseña y Password: admin
+
+--------------------------------------------------------------------------------------------------------------------
+
+Creando el DockerFile y ejecutandolo y subiendo a DockerHub 
+
+A nivel de container dentro del appsettings se referencia al nombre del contenedor 
+
+Primer Comando a lanzar:  dotnet publish -c Release --output ./publish
+
+Segundo Comando: docker build -t dach0902/img-security .  Cuando se pone "." se da a entender que el DockerFile esta en la mismo nivel 
+
+Loguearse al DockerHub: docker login 
+
+Subiendo imagen a DockerHub: docker push dach092/img-security
+
+Notas: los cambios en el appsetting donde hay localhost reemplazar por los nombres del contenedor cuando el appsetting es docker 
